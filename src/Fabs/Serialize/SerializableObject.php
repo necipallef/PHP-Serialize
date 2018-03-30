@@ -96,13 +96,15 @@ class SerializableObject implements \JsonSerializable
                     if ($registered_type->getIsArray() === false) {
                         $this->$property_name = self::create($value, $registered_type->getClassName());
                     } else {
-                        $this->$property_name = [];
+                        $property_value = [];
                         foreach ($value as $object_key => $object_value) {
-                            $this->$property_name[$object_key] = self::create(
+                            $property_value[$object_key] = self::create(
                                 $object_value,
                                 $registered_type->getClassName()
                             );
                         }
+
+                        $this->$property_name = $property_value;
                     }
                 } else {
                     $this->$property_name = $value;
